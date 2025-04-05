@@ -110,11 +110,25 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer root {
+  :root {
+    --font-sans: var(--font-inter);
+    --header-height: calc(var(--spacing) * 12 + 1px);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+
+@layer body {
+  body {
+    @apply overscroll-none bg-transparent
   }
 }

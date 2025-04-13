@@ -4,15 +4,18 @@ import appCss from "@/styles.css?url";
 import { queryClient } from "@/lib/react-query";
 import { ThemeProvider } from "@/context/theme-context";
 import { TooltipProvider } from "@/components/atoms/ui/tooltip";
+import { NuqsAdapter } from "nuqs/adapters/react";
 
 const RootComponent = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <main className="bg-background overscroll-none font-display antialiased">
-            <Outlet />
-          </main>
+          <NuqsAdapter>
+            <main className="bg-background overscroll-none font-display antialiased">
+              <Outlet />
+            </main>
+          </NuqsAdapter>
         </ThemeProvider>
       </TooltipProvider>
     </QueryClientProvider>

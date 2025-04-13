@@ -30,25 +30,7 @@ export type ButtonProps = ButtonBaseProps &
   );
 
 const buttonVariants = cva(
-  `
-    relative
-    flex items-center justify-center
-    cursor-pointer
-    inline-flex
-    items-center
-    space-x-2
-    text-center
-    font-regular
-    ease-out
-    duration-200
-    rounded-md
-    outline-none
-    transition-all
-    outline-0
-    focus-visible:outline-4 
-    focus-visible:outline-offset-1
-    border
-  `,
+  "group inline-flex items-center cursor-pointer justify-center gap-1 relative whitespace-nowrap rounded-[10px] text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -67,17 +49,11 @@ const buttonVariants = cva(
           "bg-metallic-blue-100 text-light-bg-50 shadow-xs hover:bg-metallic-blue-200 dark:text-light-bg-50",
       },
       size: {
-        tiny: "text-xs px-2.5 py-1 h-[24px]",
-        sm: "text-sm leading-4 px-3 py-2 h-[28px]",
-        base: "text-sm px-4 py-2 h-[32px]",
-        lg: "text-base px-4 py-2 h-[36px]",
+        xs: "h-6 p-2 leading-none text-xs rounded-md",
+        sm: "h-7 px-2 py-1.5 leading-none text-sm",
+        base: "px-2.5 py-2 text-sm leading-none",
+        lg: "px-3 py-2.5",
         icon: "flex justify-center",
-      },
-      block: {
-        true: 'w-full flex items-center justify-center',
-      },
-      disabled: {
-        true: 'opacity-50 cursor-not-allowed pointer-events-none',
       },
       loading: {
         true: "cursor-wait",

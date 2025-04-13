@@ -1,32 +1,44 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import appCss from "@/styles.css?url"
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import appCss from "@/styles.css?url";
+import { queryClient } from "@/lib/react-query";
+import { ThemeProvider } from "@/context/theme-context";
+import { TooltipProvider } from "@/components/atoms/ui/tooltip";
+
+const RootComponent = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+          <main className="bg-background overscroll-none font-display antialiased">
+            <Outlet />
+          </main>
+        </ThemeProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1.0',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1.0",
       },
       {
-        title: "Flowing App"
-      }
+        title: "Flowing App",
+      },
     ],
     links: [
       {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: appCss,
-      }
-    ]
+      },
+    ],
   }),
-  component: () => (
-    <>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
+  component: RootComponent,
+});

@@ -1,9 +1,14 @@
 @import "tailwindcss" source("../");
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-display: "Rubik", sans-serif;
+  --breakpoint-3xl: 120rem;
+  --header-height: calc(var(--spacing) * 12 + 1px);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -39,75 +44,135 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+
+  /* Metallic Chic Palette */
+  --color-dark-bg-100: oklch(0.211 0.008 -72.1); /* #18181b - Sidebar */
+  --color-dark-bg-200: oklch(0.23 0.008 -73);  
+  --color-dark-bg-300: oklch(0.258 0.008 -73.6); /* #232326 - Background */
+  --color-dark-bg-400: oklch(0.28 0.008 -74);
+  --color-dark-bg-500: oklch(0.3 0.008 -74);
+  
+  --color-light-bg-50: oklch(0.984 0.014 -88.1); /* #fafafa */
+  --color-light-bg-100: oklch(0.96 0.01 -88);
+  --color-light-bg-200: oklch(0.94 0.01 -88);
+  --color-light-bg-300: oklch(0.92 0.01 -88);
+  --color-light-bg-400: oklch(0.9 0.01 -88);
+  
+  --color-metallic-blue-100: oklch(0.499 0.116 -66.8); /* #3D52A0 */
+  --color-metallic-blue-200: oklch(0.55 0.12 -67);
+  --color-metallic-blue-300: oklch(0.6 0.122 -68);
+  --color-metallic-blue-400: oklch(0.65 0.124 -68);
+  --color-metallic-blue-500: oklch(0.703 0.124 -68.3); /* #7091E6 */
+  
+  --color-metallic-pastel-100: oklch(0.695 0.07 -69.7); /* #8697C4 */
+  --color-metallic-pastel-200: oklch(0.73 0.065 -70);
+  --color-metallic-pastel-300: oklch(0.77 0.06 -71);
+  --color-metallic-pastel-400: oklch(0.801 0.052 -72); /* #ADBBDA */
+  --color-metallic-pastel-500: oklch(0.85 0.04 -72);
+  
+  --color-metallic-lavender-100: oklch(0.9 0.03 -72);
+  --color-metallic-lavender-200: oklch(0.92 0.028 -72);
+  --color-metallic-lavender-300: oklch(0.941 0.026 -72.4); /* #EDE8F5 */
+  --color-metallic-lavender-400: oklch(0.96 0.022 -73);
+  --color-metallic-lavender-500: oklch(0.98 0.018 -74);
+
+  /* Destructive Color */
+  --color-metallic-red-100: oklch(0.5 0.13 25);
+  --color-metallic-red-200: oklch(0.55 0.15 25);
+  --color-metallic-red-300: oklch(0.6 0.17 25);
+  --color-metallic-red-400: oklch(0.65 0.19 25);
+  --color-metallic-red-500: oklch(0.7 0.21 25);
+
+  --color-sidebar-light: oklch(0.927 0.027 -75.4);
+
+
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 }
 
 :root {
+  /* Light Mode - Metallic Chic */
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  --background: var(--color-light-bg-50);
+  --foreground: var(--color-dark-bg-300);
+  --card: var(--color-light-bg-100);
+  --card-foreground: var(--color-dark-bg-300);
+  --popover: var(--color-light-bg-50);
+  --popover-foreground: var(--color-dark-bg-300);
+  --primary: var(--color-metallic-blue-500);
+  --primary-foreground: var(--color-light-bg-50);
+  --secondary: var(--color-metallic-pastel-400);
+  --secondary-foreground: var(--color-dark-bg-300);
+  --muted: var(--color-light-bg-200);
+  --muted-foreground: var(--color-dark-bg-200);
+  --accent: var(--color-metallic-blue-100);
+  --accent-foreground: var(--color-light-bg-50);
+  --destructive: var(--color-metallic-red-400);
+  --destructive-foreground: var(--color-light-bg-50);
+  --border: var(--color-metallic-pastel-300);
+  --input: var(--color-metallic-pastel-200);
+  --ring: var(--color-metallic-blue-500);
+  
+  /* Chart Colors */
+  --chart-1: var(--color-metallic-blue-500);
+  --chart-2: var(--color-metallic-pastel-100);
+  --chart-3: var(--color-metallic-blue-100);
+  --chart-4: var(--color-metallic-pastel-400);
+  --chart-5: var(--color-metallic-lavender-300);
+  
+  /* Sidebar */
+  --sidebar: var(--color-metallic-lavender-400);
+  --sidebar-foreground: var(--color-dark-bg-300);
+  --sidebar-primary: var(--color-metallic-blue-500);
+  --sidebar-primary-foreground: var(--color-light-bg-50);
+  --sidebar-accent: var(--color-metallic-blue-100);
+  --sidebar-accent-foreground: var(--color-light-bg-50);
+  --sidebar-border: var(--color-metallic-pastel-300);
+  --sidebar-ring: var(--color-metallic-blue-500);
+
+
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  /* Dark Mode - Metallic Chic */
+  --background: var(--color-dark-bg-300);
+  --foreground: var(--color-light-bg-50);
+  --card: var(--color-dark-bg-200);
+  --card-foreground: var(--color-light-bg-50);
+  --popover: var(--color-dark-bg-200);
+  --popover-foreground: var(--color-light-bg-50);
+  --primary: var(--color-metallic-blue-500);
+  --primary-foreground: var(--color-light-bg-50);
+  --secondary: var(--color-metallic-blue-100);
+  --secondary-foreground: var(--color-light-bg-50);
+  --muted: var(--color-dark-bg-200);
+  --muted-foreground: var(--color-metallic-pastel-400);
+  --accent: var(--color-metallic-pastel-100);
+  --accent-foreground: var(--color-light-bg-50);
+  --destructive: var(--color-metallic-red-400);
+  --destructive-foreground: var(--color-light-bg-50);
+  --border: var(--color-dark-bg-100);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --ring: var(--color-metallic-blue-500);
+  
+  /* Chart Colors */
+  --chart-1: var(--color-metallic-blue-500);
+  --chart-2: var(--color-metallic-pastel-400);
+  --chart-3: var(--color-metallic-lavender-300);
+  --chart-4: var(--color-metallic-blue-100);
+  --chart-5: var(--color-metallic-pastel-100);
+  
+  /* Sidebar */
+  --sidebar: var(--color-dark-bg-100);
+  --sidebar-foreground: var(--color-light-bg-50);
+  --sidebar-primary: var(--color-metallic-blue-500);
+  --sidebar-primary-foreground: var(--color-light-bg-50);
+  --sidebar-accent: var(--color-metallic-pastel-400);
+  --sidebar-accent-foreground: var(--color-dark-bg-300);
+  --sidebar-border: var(--color-dark-bg-200);
+  --sidebar-ring: var(--color-metallic-blue-500);
 }
 
 @layer root {
@@ -124,7 +189,28 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .theme-scaled {
+    @media (min-width: 1024px) {
+      --radius: 0.6rem;
+      --text-lg: 1.05rem;
+      --text-base: 0.85rem;
+      --text-sm: 0.8rem;
+      --spacing: 0.222222rem;
+    }
+  
+    [data-slot="card"] {
+      --spacing: 0.16rem;
+    }
+  
+    [data-slot="select-trigger"],
+    [data-slot="toggle-group-item"] {
+      --spacing: 0.222222rem;
+    }
+  }
+  
 }
+
 
 
 @layer body {

@@ -11,18 +11,32 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as EditorRouteImport } from './routes/editor/route'
 import { Route as DashboardRouteImport } from './routes/dashboard/route'
+import { Route as AuthRouteImport } from './routes/auth/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
+import { Route as EditorWorkflowIdImport } from './routes/editor/$workflowId'
 import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as DashboardWorkflowsIndexImport } from './routes/dashboard/workflows/index'
 
 // Create/Update Routes
 
+const EditorRouteRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardRouteRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRouteRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,22 +46,22 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardIndexRoute = DashboardIndexImport.update({
+const AuthIndexRoute = AuthIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => DashboardRouteRoute,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const AuthIndexRoute = AuthIndexImport.update({
-  id: '/auth/',
-  path: '/auth/',
-  getParentRoute: () => rootRoute,
+const EditorWorkflowIdRoute = EditorWorkflowIdImport.update({
+  id: '/$workflowId',
+  path: '/$workflowId',
+  getParentRoute: () => EditorRouteRoute,
 } as any)
 
 const AuthLoginRoute = AuthLoginImport.update({
-  id: '/auth/login',
-  path: '/auth/login',
-  getParentRoute: () => rootRoute,
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 
 const DashboardWorkflowsIndexRoute = DashboardWorkflowsIndexImport.update({
@@ -67,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -74,26 +95,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRoute
     }
+    '/editor': {
+      id: '/editor'
+      path: '/editor'
+      fullPath: '/editor'
+      preLoaderRoute: typeof EditorRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/login': {
       id: '/auth/login'
-      path: '/auth/login'
+      path: '/login'
       fullPath: '/auth/login'
       preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AuthRouteImport
+    }
+    '/editor/$workflowId': {
+      id: '/editor/$workflowId'
+      path: '/$workflowId'
+      fullPath: '/editor/$workflowId'
+      preLoaderRoute: typeof EditorWorkflowIdImport
+      parentRoute: typeof EditorRouteImport
     }
     '/auth/': {
       id: '/auth/'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/dashboard/': {
-      id: '/dashboard/'
       path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardRouteImport
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexImport
+      parentRoute: typeof AuthRouteImport
     }
     '/dashboard/workflows/': {
       id: '/dashboard/workflows/'
@@ -107,13 +135,25 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthIndexRoute: AuthIndexRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 interface DashboardRouteRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardWorkflowsIndexRoute: typeof DashboardWorkflowsIndexRoute
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
   DashboardWorkflowsIndexRoute: DashboardWorkflowsIndexRoute,
 }
 
@@ -121,30 +161,48 @@ const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
   DashboardRouteRouteChildren,
 )
 
+interface EditorRouteRouteChildren {
+  EditorWorkflowIdRoute: typeof EditorWorkflowIdRoute
+}
+
+const EditorRouteRouteChildren: EditorRouteRouteChildren = {
+  EditorWorkflowIdRoute: EditorWorkflowIdRoute,
+}
+
+const EditorRouteRouteWithChildren = EditorRouteRoute._addFileChildren(
+  EditorRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteRouteWithChildren
   '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/editor': typeof EditorRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
-  '/auth': typeof AuthIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/editor/$workflowId': typeof EditorWorkflowIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/dashboard/workflows': typeof DashboardWorkflowsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/editor': typeof EditorRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/editor/$workflowId': typeof EditorWorkflowIdRoute
   '/auth': typeof AuthIndexRoute
-  '/dashboard': typeof DashboardIndexRoute
   '/dashboard/workflows': typeof DashboardWorkflowsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteRouteWithChildren
   '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/editor': typeof EditorRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/editor/$workflowId': typeof EditorWorkflowIdRoute
   '/auth/': typeof AuthIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/dashboard/workflows/': typeof DashboardWorkflowsIndexRoute
 }
 
@@ -152,36 +210,47 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/dashboard'
-    | '/auth/login'
     | '/auth'
-    | '/dashboard/'
+    | '/dashboard'
+    | '/editor'
+    | '/auth/login'
+    | '/editor/$workflowId'
+    | '/auth/'
     | '/dashboard/workflows'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth/login' | '/auth' | '/dashboard' | '/dashboard/workflows'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/editor'
+    | '/auth/login'
+    | '/editor/$workflowId'
+    | '/auth'
+    | '/dashboard/workflows'
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/dashboard'
+    | '/editor'
     | '/auth/login'
+    | '/editor/$workflowId'
     | '/auth/'
-    | '/dashboard/'
     | '/dashboard/workflows/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthIndexRoute: typeof AuthIndexRoute
+  EditorRouteRoute: typeof EditorRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthIndexRoute: AuthIndexRoute,
+  EditorRouteRoute: EditorRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -195,30 +264,44 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth",
         "/dashboard",
-        "/auth/login",
-        "/auth/"
+        "/editor"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/auth": {
+      "filePath": "auth/route.tsx",
+      "children": [
+        "/auth/login",
+        "/auth/"
+      ]
+    },
     "/dashboard": {
       "filePath": "dashboard/route.tsx",
       "children": [
-        "/dashboard/",
         "/dashboard/workflows/"
       ]
     },
+    "/editor": {
+      "filePath": "editor/route.tsx",
+      "children": [
+        "/editor/$workflowId"
+      ]
+    },
     "/auth/login": {
-      "filePath": "auth/login.tsx"
+      "filePath": "auth/login.tsx",
+      "parent": "/auth"
+    },
+    "/editor/$workflowId": {
+      "filePath": "editor/$workflowId.tsx",
+      "parent": "/editor"
     },
     "/auth/": {
-      "filePath": "auth/index.tsx"
-    },
-    "/dashboard/": {
-      "filePath": "dashboard/index.tsx",
-      "parent": "/dashboard"
+      "filePath": "auth/index.tsx",
+      "parent": "/auth"
     },
     "/dashboard/workflows/": {
       "filePath": "dashboard/workflows/index.tsx",

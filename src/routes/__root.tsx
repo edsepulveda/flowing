@@ -12,7 +12,7 @@ const RootComponent = () => {
       <TooltipProvider>
         <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <NuqsAdapter>
-            <main className="bg-background overscroll-none font-display antialiased">
+            <main className="bg-background overscroll-none font-sans antialiased">
               <Outlet />
             </main>
           </NuqsAdapter>

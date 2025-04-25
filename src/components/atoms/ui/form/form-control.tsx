@@ -44,6 +44,7 @@ export const FormControl = ({
           label={label}
           isOptional={isOptional}
           isRequired={isRequired}
+          isError={isError}
           id={id}
           icon={icon}
           tooltipText={tooltipText}

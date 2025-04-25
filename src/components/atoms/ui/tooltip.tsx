@@ -47,12 +47,12 @@ function Tooltip({
     <TooltipPrimitive.Content
       {...props}
       className={cn(
-        "z-50 overflow-hidden rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 text-xs text-foreground shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-5 data-[side=left]:slide-in-from-right-5 data-[side=right]:slide-in-from-left-5 data-[side=top]:slide-in-from-bottom-5",
+        "z-50 overflow-hidden bg-card rounded-md border border-input px-3 py-1.5 text-xs text-foreground shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-5 data-[side=left]:slide-in-from-right-5 data-[side=right]:slide-in-from-left-5 data-[side=top]:slide-in-from-bottom-5",
         props.className
       )}
       side={side}
       align="center"
-      collisionPadding={0}
+      collisionPadding={3}
     >
       {typeof content === "string" ? (
         <span className={cn("block", contentClassName)}>{content}</span>

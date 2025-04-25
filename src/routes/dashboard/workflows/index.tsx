@@ -1,46 +1,71 @@
 import { Button } from "@/components/atoms/ui/button";
+import {
+  Container,
+  ContainerSection,
+} from "@/components/atoms/ui/layouts/containers";
 import { EmptyState } from "@/components/molecules/empty-state";
+import { WorkflowList } from "@/components/molecules/workflows/workflow-list";
 import { useCreateEditWorkflow } from "@/components/organism/modals/workflows/create-edit-workflow";
+import { PageLayout } from "@/components/templates/layouts/page-layout";
+import { useGetWorkflows } from "@/services/workflows/queries";
 import { createFileRoute } from "@tanstack/react-router";
-import { Layers2, Plus } from "lucide-react";
+import { Layers2, Plus, WorkflowIcon } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/workflows/")({
   component: RouteComponent,
   loader: () => ({
     crumb: "Workflows",
+    Logo: () => <WorkflowIcon className="w-4 h-4 me-1.5" />,
   }),
 });
 
 function RouteComponent() {
   const { WorkflowModal, setShowWorkflowModal } = useCreateEditWorkflow();
 
+  const { data: workflows, isLoading } = useGetWorkflows();
   return (
     <>
       <WorkflowModal />
-      <div className="@container/main flex flex-1 flex-col gap-2">
-        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <h1 className="text-2xl font-bold">Workflows</h1>
-          <p className="text-muted-foreground">
-            You can see your workflows here
-          </p>
+      <PageLayout
+        size="large"
+        title="Workflows"
+        subtitle="Create and edit yours workflows"
+        icon={<WorkflowIcon className="size-7" />}
+        primaryAction={
+          <Button
+            startIcon={Plus}
+            onClick={() => {
+              setShowWorkflowModal(true);
+            }}
+          >
+            Create Workflow
+          </Button>
+        }
+      >
+        <Container size="full">
+          <ContainerSection isFullWidth>
+            {workflows && !isLoading && <WorkflowList workflows={workflows} />}
 
-          <EmptyState
-            title="No Workflows found"
-            description="Create one workflow from scratch"
-            icon={Layers2}
-            addButton={
-              <Button
-                startIcon={Plus}
-                onClick={() => {
-                  setShowWorkflowModal(true);
-                }}
-              >
-                Create Workflow
-              </Button>
-            }
-          />
-        </div>
-      </div>
+            {!workflows && !isLoading && (
+              <EmptyState
+                title="No Workflows found"
+                description="Create one workflow from scratch"
+                icon={Layers2}
+                addButton={
+                  <Button
+                    startIcon={Plus}
+                    onClick={() => {
+                      setShowWorkflowModal(true);
+                    }}
+                  >
+                    Create Workflow
+                  </Button>
+                }
+              />
+            )}
+          </ContainerSection>
+        </Container>
+      </PageLayout>
     </>
   );
 }

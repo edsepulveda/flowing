@@ -109,7 +109,7 @@ const DialogContent = React.forwardRef<
           className={cn(
             DialogContentVariants({ size }),
             className,
-            "bg-light-bg-100 dark:bg-dark-bg-300"
+            "bg-card border-border shadow-lg"
           )}
           {...props}
         >

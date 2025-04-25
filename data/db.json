@@ -1,4 +1,15 @@
 {
-  "workflows": [],
+  "workflows": [
+    {
+      "id": "ed80",
+      "name": "Testing Workflow",
+      "description": "This is a testing workflow"
+    },
+    {
+      "id": "863d",
+      "name": "dqwdqw",
+      "description": "dwqdwqdqw"
+    }
+  ],
   "users": []
 }

@@ -11,7 +11,7 @@ import { Link } from "@tanstack/react-router";
 export function NavMain({
   items,
 }: {
-  items: { title: string; url: string; icon: MenuItemProps<any>["icon"] }[];
+  items: { title: string; url: string; icon: MenuItemProps["icon"] }[];
 }) {
   return (
     <SidebarGroup>

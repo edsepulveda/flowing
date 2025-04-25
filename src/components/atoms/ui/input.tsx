@@ -15,35 +15,36 @@ type CommonProps = {
 };
 
 const inputVariants = cva(
-  "w-full py-[0.375rem] placeholder:text-sm dark:placeholder-gray-500 placeholder-opacity-50 outline-none focus:ring-2 hover:ring-metallic-blue-100 duration-100",
+  "w-full py-[0.375rem] h-9 placeholder:text-sm dark:placeholder-muted-foreground placeholder-opacity-50 outline-none focus-visible:ring-2 transition-all duration-150",
   {
     variants: {
       size: {
         xs: ["text-xs"],
         sm: ["text-sm"],
         md: ["text-sm"],
-        lg: ["text-lg"],
+        lg: ["text-sm"],
       },
       isRounded: {
         true: ["rounded-md"],
         false: "",
       },
       variant: {
-        filled: "bg-slate-200 dark:bg-neutral-800 text-black dark:text-gray-400",
+        filled: "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
         outline: "bg-transparent",
         plain: "bg-transparent outline-none",
       },
       isError: {
-        true: "focus:ring-metallic-red-400/50 placeholder-metallic-red-300",
-        false: "focus:ring-primary/50 focus:ring-1",
+        true: "focus-visible:ring-destructive/60 placeholder-destructive/70 focus-visible:border-destructive",
+        false: "focus-visible:ring-ring/30 focus-visible:border-ring",
       },
     },
     compoundVariants: [],
   }
 );
 
+// Input Parent Container Variants with theme variables
 const inputParentContainerVariants = cva(
-  "inline-flex font-display items-center border border-neutral-400 dark:border-neutral-700 relative",
+  "inline-flex font-sans items-center border relative transition-all duration-150",
   {
     variants: {
       isRounded: {
@@ -51,19 +52,41 @@ const inputParentContainerVariants = cva(
         false: "",
       },
       isError: {
-        true: "!border-metallic-red-400",
-        false: "border-metallic-blue-400",
+        true: "border-destructive/70 focus-within:border-destructive focus-within:ring-2 focus-within:ring-destructive/30",
+        false: "border-border dark:border-border focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20",
       },
       isFullWidth: {
         true: "w-full",
         false: "",
       },
       variant: {
-        filled: "bg-neutral-100 dark:bg-neutral-800 text-black dark:text-gray-400",
-        outline: "bg-transparent",
-        plain: "bg-transparent outline-none",
+        filled: "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
+        outline: "bg-transparent hover:border-border dark:hover:border-border/70",
+        plain: "bg-transparent outline-none border-transparent",
       },
+      isFocused: {
+        true: "",
+        false: "",
+      },
+      isDisabled: {
+        true: "opacity-60 cursor-not-allowed bg-muted dark:bg-muted/50 border-border dark:border-border",
+        false: "",
+      }
     },
+    compoundVariants: [
+      {
+        isError: false,
+        variant: "filled",
+        isFocused: true,
+        className: "border-ring ring-2 ring-ring/20"
+      },
+      {
+        isError: true,
+        variant: "filled",
+        isFocused: true,
+        className: "border-destructive ring-2 ring-destructive/30"
+      },
+    ],
   }
 );
 

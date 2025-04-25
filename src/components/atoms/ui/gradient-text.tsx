@@ -15,7 +15,7 @@ const GradientText = React.forwardRef<HTMLSpanElement, GradientTextProps>(
     {
       text,
       className,
-      gradient = 'linear-gradient(90deg, #3D52A0 0%, #EDE8F5 20%, #ec4899 50%, #a855f7 80%, #3b82f6 100%)',
+      gradient = 'linear-gradient(90deg, var(--primary) 0%, var(--secondary) 20%, var(--accent) 50%, var(--chart-1) 80%, var(--chart-3) 100%)',
       neon = false,
       transition = { duration: 50, repeat: Infinity, ease: 'linear' },
       ...props

@@ -476,10 +476,19 @@ const sidebarMenuButtonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "hover:bg-metallic-pastel-400/30 hover:text-dark-bg-300 dark:hover:bg-metallic-pastel-100/20 dark:hover:text-light-bg-50",
+        default: "hover:bg-card hover:text-sidebar-accent-foreground",
         outline:
-          "bg-background shadow-[0_0_0_1px_var(--color-metallic-pastel-300)] hover:bg-metallic-pastel-400/30 hover:text-dark-bg-300 hover:shadow-[0_0_0_1px_var(--color-metallic-pastel-200)] dark:bg-dark-bg-200 dark:shadow-[0_0_0_1px_var(--color-dark-bg-100)] dark:hover:bg-metallic-pastel-100/20 dark:hover:text-light-bg-50 dark:hover:shadow-[0_0_0_1px_var(--color-metallic-blue-100)]",
+          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+        
+        // New variants
+        solid:
+          "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 hover:text-sidebar-primary-foreground data-[active=true]:bg-sidebar-primary/80 data-[active=true]:text-sidebar-primary-foreground",
+        subtle:
+          "bg-transparent text-sidebar-foreground hover:bg-sidebar-accent/5 hover:text-sidebar-foreground data-[active=true]:bg-sidebar-primary/5 data-[active=true]:text-sidebar-primary",
+        ghost:
+          "bg-transparent text-sidebar-foreground hover:bg-transparent hover:text-sidebar-primary data-[active=true]:bg-transparent data-[active=true]:text-sidebar-primary",
+        accent:
+          "bg-sidebar-accent/10 text-sidebar-accent-foreground hover:bg-sidebar-accent/20 hover:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent/30 data-[active=true]:text-sidebar-accent-foreground",
       },
       size: {
         default: "h-8 text-sm",

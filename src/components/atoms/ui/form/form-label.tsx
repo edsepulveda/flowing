@@ -8,6 +8,7 @@ export type FormLabelProps = {
   id?: string;
   isRequired?: boolean;
   isOptional?: boolean;
+  isError?: boolean;
   label?: ReactNode;
   icon?: ReactNode;
   className?: string;
@@ -19,6 +20,7 @@ export const FormLabel = ({
   id,
   label,
   isRequired,
+  isError,
   icon,
   className,
   isOptional,
@@ -28,16 +30,17 @@ export const FormLabel = ({
   return (
     <Label.Root
       className={cn(
-        "mb-2 flex items-center text-sm font-normal text-neutral-900 dark:text-neutral-200",
+        "mb-2 flex items-center text-sm font-normal",
+        isError && "text-destructive",
         className
       )}
       id={id}
       htmlFor={id}
     >
       {label}
-      {isRequired && <span className="ml-1 text-metallic-red-400">*</span>}
+      {isRequired && <span className="ml-1 text-destructive">*</span>}
       {isOptional && (
-        <span className="ml-1 italic text-xs text-neutral-800 dark:text-neutral-200">
+        <span className="ml-1 italic text-xs text-muted-foreground">
           {" "}
           - Optional
         </span>

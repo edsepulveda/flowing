@@ -30,30 +30,60 @@ export type ButtonProps = ButtonBaseProps &
   );
 
 const buttonVariants = cva(
-  "group inline-flex items-center cursor-pointer justify-center gap-1 relative whitespace-nowrap rounded-[10px] text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "group inline-flex items-center cursor-pointer justify-center gap-1 relative whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          "bg-metallic-blue-500 text-light-bg-50 shadow-xs hover:bg-metallic-blue-400 dark:bg-metallic-blue-500 dark:text-light-bg-50 dark:hover:bg-metallic-blue-400",
+          "bg-primary/75 border border-primary-foreground/25 text-primary-foreground shadow-sm shadow-black/5 hover:bg-primary/90",
         destructive:
-          "bg-metallic-red-400 text-light-bg-50 shadow-xs hover:bg-metallic-red-300 focus-visible:ring-metallic-red-300/20 dark:focus-visible:ring-metallic-red-300/40",
+          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         outline:
-          "border border-metallic-pastel-300 bg-background shadow-xs hover:bg-metallic-pastel-400/20 hover:text-dark-bg-300 dark:bg-dark-bg-200/30 dark:border-dark-bg-100 dark:hover:bg-dark-bg-200/50 dark:hover:text-light-bg-50",
+          "border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-metallic-pastel-400 text-dark-bg-300 shadow-xs hover:bg-metallic-pastel-300 dark:bg-metallic-blue-100 dark:text-light-bg-50 dark:hover:bg-metallic-blue-200",
-        ghost:
-          "hover:bg-metallic-pastel-400/20 hover:text-dark-bg-300 dark:hover:bg-metallic-pastel-100/20 dark:hover:text-light-bg-50",
-        link: "text-metallic-blue-500 underline-offset-4 hover:underline dark:text-metallic-blue-500",
+          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        // New variants based on styles.css
+        subtle:
+          "bg-muted/60 text-muted-foreground border border-border/40 shadow-xs hover:bg-muted/80 hover:text-foreground",
         accent:
-          "bg-metallic-blue-100 text-light-bg-50 shadow-xs hover:bg-metallic-blue-200 dark:text-light-bg-50",
+          "bg-accent text-accent-foreground shadow-xs hover:bg-accent/90 focus-visible:ring-accent/20",
+        primary:
+          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:ring-primary/30",
+        chart:
+          "bg-chart-1 text-primary-foreground shadow-sm hover:bg-chart-1/90 focus-visible:ring-chart-1/30",
+        sidebar:
+          "bg-sidebar text-sidebar-foreground shadow-xs hover:bg-sidebar/80 focus-visible:ring-sidebar-ring/30",
+        gradient:
+          "bg-gradient-to-r from-primary via-accent to-secondary text-primary-foreground shadow-sm hover:from-primary/90 hover:via-accent/90 hover:to-secondary/90",
+        flat: "bg-card text-card-foreground border border-border hover:bg-muted/40",
+        muted:
+          "bg-muted/40 text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+
+        // Destructive variants
+        "destructive-outline":
+          "border border-destructive bg-transparent text-destructive shadow-xs hover:bg-destructive/10 focus-visible:ring-destructive/20",
+        "destructive-ghost":
+          "text-destructive hover:bg-destructive/10 hover:text-destructive focus-visible:ring-destructive/20",
+        "destructive-link":
+          "text-destructive underline-offset-4 hover:underline focus-visible:ring-destructive/20",
+        "destructive-subtle":
+          "bg-destructive/10 text-destructive border border-destructive/20 shadow-xs hover:bg-destructive/20 focus-visible:ring-destructive/20",
+        "destructive-solid":
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 focus-visible:ring-destructive/30",
+        "destructive-gradient":
+          "bg-gradient-to-r from-destructive/80 via-destructive to-destructive/80 text-destructive-foreground shadow-sm hover:from-destructive/90 hover:to-destructive/90",
       },
       size: {
         xs: "h-6 p-2 leading-none text-xs rounded-md",
-        sm: "h-7 px-2 py-1.5 leading-none text-sm",
+        sm: "h-9 rounded-lg px-3",
         base: "px-2.5 py-2 text-sm leading-none",
         lg: "px-3 py-2.5",
+        xl: "px-4 py-3 text-base",
+        "2xl": "px-5 py-4 text-lg",
         icon: "flex justify-center",
+        square: "aspect-square flex justify-center",
       },
       loading: {
         true: "cursor-wait",

@@ -12,7 +12,7 @@ export const MenuIconButton = <T extends ElementType = "button">({
   lottieIcon = "forward",
   inputRef,
   ...props
-}: MenuItemProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof MenuItemProps<T>>) => {
+}: MenuItemProps & Omit<ComponentPropsWithoutRef<T>, keyof MenuItemProps>) => {
   const Item = 'div';
 
   return (
@@ -21,24 +21,34 @@ export const MenuIconButton = <T extends ElementType = "button">({
         type="button"
         role="menuitem"
         className={cn(
-          "group flex items-center gap-2.5 rounded-md px-4 py-2.5 text-sm leading-none text-dark-bg-300 transition-[background-color,color,font-weight] duration-75 dark:text-neutral-500 hover:bg-metallic-pastel-400/20 active:bg-metallic-pastel-400/30",
-          "outline-none focus-visible:ring-2 focus-visible:ring-metallic-blue-500/50 border border-transparent",
-          isSelected &&
-            "bg-white border border-neutral-300 dark:border-neutral-700 font-medium text-metallic-blue-500 active:bg-metallic-pastel-400/40 dark:bg-dark-bg-200 dark:text-metallic-blue-500 dark:hover:bg-dark-bg-200/80 dark:active:bg-dark-bg-200/90",
-          isDisabled &&
-            "cursor-not-allowed opacity-50 bg-transparent pointer-events-none",
+          "group flex items-center gap-2.5 rounded-md px-4 py-2.5 text-sm leading-none transition-[background-color,color,font-weight] duration-75",
+          "text-sidebar-foreground outline-none",
+          "hover:bg-sidebar-accent/10 active:bg-sidebar-accent/20",
+          
+          isSelected && [
+            "bg-sidebar-primary/10 font-medium",
+            "text-sidebar-primary active:bg-sidebar-primary/20",
+            "dark:bg-sidebar-primary/15 dark:border-sidebar-border",
+            "dark:hover:bg-sidebar-primary/20 dark:active:bg-sidebar-primary/30"
+          ],
+          
+          // Disabled state
+          isDisabled && "cursor-not-allowed opacity-50 bg-transparent pointer-events-none",
+          
           className
         )}
         ref={inputRef}
         {...props}
       >
         {isSelected && (
-          <div className="absolute left-1 top-1/2 h-3 w-1 -translate-y-1/2 -translate-x-1.5 rounded-full bg-metallic-blue-500 shadow-md shadow-metallic-blue-500/20 dark:bg-metallic-blue-500 dark:shadow-metallic-blue-500/20" />
+          <div className="absolute left-1 top-1/2 h-3 w-1 -translate-y-1/2 -translate-x-1.5 rounded-full bg-sidebar-primary shadow-md shadow-sidebar-primary/20" />
         )}
 
         {Icon && (
           <div className="flex-shrink-0 flex items-center justify-center">
-            <Icon className={cn("size-4 transition-colors duration-200")} />
+            <Icon className={cn("size-4 transition-colors duration-200", 
+              isSelected ? "text-sidebar-primary" : "text-sidebar-foreground"
+            )} />
           </div>
         )}
 

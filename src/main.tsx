@@ -6,14 +6,14 @@ import { ErrorComponent, RouterProvider, createRouter } from "@tanstack/react-ro
 import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
-import reportWebVitals from "./reportWebVitals.ts";
 import { queryClient } from "./lib/react-query.ts";
+import '@xyflow/react/dist/style.css';
+
 
 // Create a new router instance
 const router = createRouter({
   routeTree,
-  context: { auth: undefined!, queryClient },
-  defaultPreload: "intent",
+  context: { queryClient },
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
   scrollRestoration: true,
   defaultStructuralSharing: true,
@@ -38,7 +38,3 @@ if (rootElement && !rootElement.innerHTML) {
   );
 }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

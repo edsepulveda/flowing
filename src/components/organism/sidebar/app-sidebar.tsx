@@ -31,6 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               asChild
               size="lg"
+              variant="subtle"
               className="data-[state=open]:bg-sidebar-accent data-[slot=sidebar-menu-button]:!p-1.5 [&>svg]:size-auto"
             >
               <Link to="/">
@@ -55,6 +56,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   );
 }
 
-function SidebarLogo() {
+export function SidebarLogo() {
   return <Layers2 className="size-5" />;
 }

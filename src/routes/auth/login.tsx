@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AuthCommonLayout } from "@/components/templates/layouts/auth/auth-common-layout";
 import { LoginForm } from "@/components/molecules/forms/auth/login-form";
 import { Text } from "@/components/atoms/ui/typography";
+import { Separator } from "@/components/atoms/ui/separator";
+import { Button } from "@/components/atoms/ui/button";
+import { GitHubIcon, GoogleIcon } from "@/components/atoms/ui/icons";
 
 const LoginPage = () => {
   return (
@@ -11,16 +14,22 @@ const LoginPage = () => {
     >
       <div className="flex flex-col gap-5">
         <LoginForm />
-        
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-stone-500" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <Text as="span" className="px-2 text-sm bg-studio text-foreground">
-              Or Login With
-            </Text>
-          </div>
+
+        <div className="w-full flex items-center justify-center overflow-hidden">
+          <Separator />
+          <span className="text-sm px-2">OR</span>
+          <Separator />
+        </div>
+
+        <div className="mb-2.5 flex items-center justify-center-safe gap-6">
+          <Button variant="outline" size="lg">
+            <GoogleIcon className="me-2.5" />
+            Sign in With Google
+          </Button>
+          <Button variant="outline" size="lg">
+            <GitHubIcon className="me-2.5" />
+            Sign in With Github
+          </Button>
         </div>
       </div>
     </AuthCommonLayout>

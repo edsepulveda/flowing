@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 export const AuthLayout = ({ children }: PropsWithChildren) => {
   return (
     <div
-      className="flex flex-col h-screen w-screen"
+      className="flex flex-col min-h-dvh min-w-screen"
     >
       <div
         className="flex flex-1 w-full overflow-y-hidden"

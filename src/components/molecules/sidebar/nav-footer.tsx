@@ -17,10 +17,10 @@ import {
   AvatarFallback,
 } from "@/components/atoms/ui/avatar";
 
-import type { User } from "@/lib/types/user";
 import { ChevronsUpDownIcon, LogOutIcon, UserCog2 } from "lucide-react";
+import type { UsersResponse } from "@/services/user/types";
 
-export function NavUser({ user }: { user: User }) {
+export function NavUser({ user }: { user: UsersResponse }) {
   const partOfName = user.name.substring(0, 2) ?? "N/A";
 
   return (
@@ -30,10 +30,6 @@ export function NavUser({ user }: { user: User }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton size="lg" variant="outline">
               <Avatar className="size-8">
-                <AvatarImage
-                  src={user.image}
-                  alt={`Profile picture of ${user.name}`}
-                />
                 <AvatarFallback>{partOfName}</AvatarFallback>
               </Avatar>
 

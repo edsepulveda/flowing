@@ -2,7 +2,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 import { AnimatedGridPattern } from "../atoms/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
 import { type LucideIcon } from "lucide-react";
-import { Large, Small } from "../atoms/ui/Typography";
+import { Large, Small } from "../atoms/ui/typography";
 
 export type EmptyStateProps = PropsWithChildren<{
   title: string;

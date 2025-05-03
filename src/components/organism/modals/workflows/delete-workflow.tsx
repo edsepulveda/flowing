@@ -13,9 +13,9 @@ export const DeleteWorkflowButton = ({
   return (
     <>
       <Button
-        variant="destructive-ghost"
+        variant="destructive-subtle"
         size="xs"
-        className="z-10"
+        className="z-10 flex-1 sm:flex-none"
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(true);

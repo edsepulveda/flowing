@@ -5,6 +5,7 @@ import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
+import { useLoginMutation } from "@/services/auth/mutations";
 
 const loginSchema = z.object({
   email: z.string().min(1).email().trim(),
@@ -23,12 +24,16 @@ export const LoginForm = () => {
     mode: "onBlur",
   });
 
+  const { mutateAsync, isPending } = useLoginMutation()
+
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     console.log(data);
+    await mutateAsync(data)
+
   };
 
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full space-y-4">
       <div className="flex flex-col gap-4">
         <Controller
           control={methods.control}
@@ -69,7 +74,7 @@ export const LoginForm = () => {
           </Link>
         </div>
 
-        <Button type="submit" size="lg">
+        <Button type="submit" size="lg" loading={isPending}>
           Sign in
         </Button>
       </div>

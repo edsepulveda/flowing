@@ -7,11 +7,18 @@ export interface UpdateWorkflowDTO extends WorkflowsDTO {
   id: string
 }
 
-export interface WorkflowsResponse {
+export interface WorkflowItemData {
   id: string
   name: string
-  description: string | null;
-  isDraft: boolean
+  description: string
+  status: string
   createdAt: string
   updatedAt: string
+}
+
+export interface WorkflowsResponse {
+  totalItems: number
+  items: WorkflowItemData[]
+  page: number
+  size: number
 }

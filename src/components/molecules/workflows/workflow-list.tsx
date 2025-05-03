@@ -6,7 +6,7 @@ import { WorkflowIcon } from "lucide-react";
 export const WorkflowList = ({
   workflows,
 }: {
-  workflows: WorkflowsResponse[];
+  workflows: WorkflowsResponse;
 }) => {
   const handleEdit = (id: string) => {
     console.log("Edit clicked", id);
@@ -14,16 +14,16 @@ export const WorkflowList = ({
 
   return (
     <CardGrid>
-      {workflows.map((workflow) => (
+      {workflows.items.map((workflow) => (
         <WorkflowCard
           key={workflow.id}
-          id={workflow.id}
+          workflowId={workflow.id}
           title={workflow.name}
           description={workflow.description}
           icon={WorkflowIcon}
           onEdit={() => handleEdit(workflow.id)}
-          date={new Date()}
-          isDraft={true}
+          date={new Date(workflow.createdAt)}
+          isDraft={workflow.status === "DRAFT"}
         />
       ))}
     </CardGrid>

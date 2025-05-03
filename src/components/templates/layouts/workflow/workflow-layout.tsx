@@ -1,7 +1,9 @@
 import { GradientText } from "@/components/atoms/ui/gradient-text";
 import { Separator } from "@/components/atoms/ui/separator";
 import { ModeToggle } from "@/components/molecules/mode-toggle";
+import WorkflowTopbar from "@/components/molecules/workflows/top-bar";
 import { SidebarLogo } from "@/components/organism/sidebar/app-sidebar";
+import { Route } from "@/routes/editor/$workflowId";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 
@@ -10,6 +12,10 @@ export default function WorkflowLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const data = Route.useLoaderData();
+
+  console.log("Catch from Dashboard", data);
+
   return (
     <motion.div
       className="h-screen w-full flex flex-col"
@@ -49,6 +55,9 @@ export default function WorkflowLayout({
         </div>
       </motion.div>
 
+      <div>
+        <WorkflowTopbar title={data.name} description={data.description} />
+      </div>
       <motion.div
         className="flex-1 relative"
         initial={{ scale: 0.98, opacity: 0.8 }}

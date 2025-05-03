@@ -16,13 +16,11 @@ import { NavUser } from "@/components/molecules/sidebar/nav-footer";
 import type { User } from "@/lib/types/user";
 import { Layers2 } from "lucide-react";
 import { GradientText } from "@/components/atoms/ui/gradient-text";
-
-const DUMMY_USER: User = {
-  name: "John Doe",
-  email: "john.doe@gmail.com",
-};
+import { useUser } from "@/context/user-context";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useUser();
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -39,7 +37,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarLogo />
                 </div>
                 <div className="grid flex-1 text-left text-base leading-tight">
-                  <GradientText className="text-lg font-semibold" text="Data Flow" />
+                  <GradientText
+                    className="text-lg font-semibold"
+                    text="Data Flow"
+                  />
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -50,7 +51,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={DUMMY_USER} />
+        <React.Suspense fallback={"Loading..."}>
+          <NavUser user={user} />
+        </React.Suspense>
       </SidebarFooter>
     </Sidebar>
   );

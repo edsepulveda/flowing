@@ -1,73 +1,90 @@
-import { createContext, useContext, useEffect, useState } from "react"
- 
-export type Theme = "dark" | "light" | "system"
- 
+import { applyTheme } from "@/lib/theme";
+import { useThemeChanger } from "@/stores/theme-store";
+import { createContext, useContext, useEffect } from "react";
+
+export type Theme = "dark" | "light";
+
 type ThemeProviderProps = {
-  children: React.ReactNode
-  defaultTheme?: Theme
-  storageKey?: string
-}
- 
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+};
+
+type Coords = { x: number; y: number };
+
 type ThemeProviderState = {
-  theme: Theme
-  setTheme: (theme: Theme) => void
-}
- 
+  theme: Theme;
+  setTheme: (mode: Theme) => void;
+  toggleTheme: (coords?: Coords) => void;
+};
+
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: "light",
   setTheme: () => null,
-}
- 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
- 
+  toggleTheme: () => null,
+};
+
+const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  defaultTheme = "light",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  )
- 
+  const { themeState, setThemeState } = useThemeChanger();
+
+  // Fixed useEffect dependency array - removed applyTheme which is a function
   useEffect(() => {
-    const root = window.document.documentElement
- 
-    root.classList.remove("light", "dark")
- 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
- 
-      root.classList.add(systemTheme)
-      return
+    const root = document.documentElement;
+    if (!root) return;
+
+    applyTheme(themeState, root);
+  }, [themeState]);
+
+  const handleThemeChange = (newMode: Theme) => {
+    setThemeState({ ...themeState, currentMode: newMode });
+  };
+
+  const handleThemeToggle = (coords?: Coords) => {
+    const root = window.document.documentElement;
+    const mode = themeState.currentMode === "light" ? "dark" : "light";
+  
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+  
+    if (!document.startViewTransition || prefersReducedMotion) {
+      handleThemeChange(mode);
+      return;
     }
- 
-    root.classList.add(theme)
-  }, [theme])
- 
+  
+    if (coords) {
+      root.style.setProperty("--x", `${coords.x}px`);
+      root.style.setProperty("--y", `${coords.y}px`);
+    }
+  
+    document.startViewTransition(() => {
+      handleThemeChange(mode);
+    });
+  };
+
   const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
-      setTheme(theme)
-    },
-  }
- 
+    theme: themeState.currentMode,
+    setTheme: handleThemeChange,
+    toggleTheme: handleThemeToggle,
+  };
+
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       {children}
     </ThemeProviderContext.Provider>
-  )
+  );
 }
- 
+
 export const useTheme = () => {
-  const context = useContext(ThemeProviderContext)
- 
+  const context = useContext(ThemeProviderContext);
+
   if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider")
- 
-  return context
-}
+    throw new Error("useTheme must be used within a ThemeProvider");
+
+  return context;
+};

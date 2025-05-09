@@ -13,13 +13,15 @@ export interface AppNode extends Node {
 
 export enum TaskType {
   BROWSER = "BROWSER",
+  PARSE_HTML = "PARSE HTML PAGE"
 }
 
 
 export interface EntryNodeData {
   type: string
   label: string
-  icon: LucideIcon
+  icon: LucideIcon | React.ComponentType<React.SVGProps<SVGSVGElement>>
+  category: string
   isEntryPoint: boolean
   [key: string]: any
 }

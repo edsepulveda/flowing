@@ -79,7 +79,7 @@ export const NodeBody = ({
                 className="mb-2"
               >
                 {renderInputField(input) || (
-                  <span className="text-muted">Unsupported input type</span>
+                  <span className="text-muted">Not Implemented Yet</span>
                 )}
               </FormControl>
 

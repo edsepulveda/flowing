@@ -14,8 +14,6 @@ export default function WorkflowLayout({
 }) {
   const data = Route.useLoaderData();
 
-  console.log("Catch from Dashboard", data);
-
   return (
     <motion.div
       className="h-screen w-full flex flex-col"
@@ -56,7 +54,11 @@ export default function WorkflowLayout({
       </motion.div>
 
       <div>
-        <WorkflowTopbar title={data.name} description={data.description} />
+        <WorkflowTopbar
+          title={data.name}
+          description={data.description}
+          isPublished={data.status === "PUBLISHED"}
+        />
       </div>
       <motion.div
         className="flex-1 relative"

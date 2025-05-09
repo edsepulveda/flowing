@@ -1,6 +1,7 @@
 export interface WorkflowsDTO {
   name: string
   description?: string
+  metadata?: string
 }
 
 export interface UpdateWorkflowDTO extends WorkflowsDTO {
@@ -14,7 +15,9 @@ export interface WorkflowItemData {
   status: string
   createdAt: string
   updatedAt: string
+  metadata?: string
 }
+
 
 export interface WorkflowsResponse {
   totalItems: number

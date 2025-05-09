@@ -24,7 +24,7 @@ export const getUserWorkflowData = (id: string) => {
   return queryOptions({
     queryKey: ["user_workflow", id],
     queryFn: () => getWorkflowById(id),
-    staleTime: 5 * 1000,
+    staleTime: Infinity
   });
 };
 

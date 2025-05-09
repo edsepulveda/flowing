@@ -7,6 +7,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextArea } from "@/components/atoms/ui/textarea";
 import { useCreateWorkflow } from "@/services/workflows/mutation";
+import { TaskType, type AppNode } from "@/types/node";
+import type { Edge } from "@xyflow/react";
+import { createNode } from "@/lib/workflow/createNode";
 
 const workflowSchema = z.object({
   name: z.string().min(1).trim(),
@@ -28,8 +31,18 @@ export const WorkflowForm = () => {
   const { mutateAsync, isPending } = useCreateWorkflow();
 
   const onSubmit: SubmitHandler<FormSchema> = async (data) => {
-    console.log(data);
-    await mutateAsync(data);
+    const initialFlow: { nodes: AppNode[]; edges: Edge[] } = {
+      nodes: [],
+      edges: [],
+    };
+
+    initialFlow.nodes.push(createNode(TaskType.BROWSER));
+
+    await mutateAsync({
+      ...data,
+      metadata: JSON.stringify(initialFlow),
+    });
+    
   };
 
   return (

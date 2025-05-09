@@ -5,6 +5,7 @@ export const BrowserEntryTask: EntryNodeData = {
   type: TaskType.BROWSER,
   label: "Launch Browser",
   icon: Code2,
+  category: "Data Extraction",
   description: "Launch a browser and navigate to a URL",
   isEntryPoint: true,
   inputs: [

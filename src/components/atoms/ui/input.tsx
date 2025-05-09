@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { AlertTriangle, Eye, EyeClosed } from "lucide-react";
 
 type CommonProps = {
   isFullWidth?: boolean;
@@ -29,12 +30,13 @@ const inputVariants = cva(
         false: "",
       },
       variant: {
-        filled: "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
+        filled:
+          "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
         outline: "bg-transparent",
         plain: "bg-transparent outline-none",
       },
       isError: {
-        true: "focus-visible:ring-destructive/60 placeholder-destructive/70 focus-visible:border-destructive",
+        true: "border-destructive ring-2 ring-destructive/30 focus-visible:ring-destructive/60 placeholder-destructive/70 focus-visible:border-destructive",
         false: "focus-visible:ring-ring/30 focus-visible:border-ring",
       },
     },
@@ -44,7 +46,7 @@ const inputVariants = cva(
 
 // Input Parent Container Variants with theme variables
 const inputParentContainerVariants = cva(
-  "inline-flex font-sans items-center border relative transition-all duration-150",
+  "relative w-full max-w-full",
   {
     variants: {
       isRounded: {
@@ -53,15 +55,18 @@ const inputParentContainerVariants = cva(
       },
       isError: {
         true: "border-destructive/70 focus-within:border-destructive focus-within:ring-2 focus-within:ring-destructive/30",
-        false: "border-border dark:border-border focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20",
+        false:
+          "border-border dark:border-border focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20",
       },
       isFullWidth: {
         true: "w-full",
         false: "",
       },
       variant: {
-        filled: "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
-        outline: "bg-transparent hover:border-border dark:hover:border-border/70",
+        filled:
+          "bg-muted dark:bg-muted text-foreground dark:text-muted-foreground hover:bg-muted/80 dark:hover:bg-muted/70",
+        outline:
+          "bg-transparent hover:border-border dark:hover:border-border/70",
         plain: "bg-transparent outline-none border-transparent",
       },
       isFocused: {
@@ -71,20 +76,20 @@ const inputParentContainerVariants = cva(
       isDisabled: {
         true: "opacity-60 cursor-not-allowed bg-muted dark:bg-muted/50 border-border dark:border-border",
         false: "",
-      }
+      },
     },
     compoundVariants: [
       {
         isError: false,
         variant: "filled",
         isFocused: true,
-        className: "border-ring ring-2 ring-ring/20"
+        className: "border-ring ring-2 ring-ring/20",
       },
       {
         isError: true,
         variant: "filled",
         isFocused: true,
-        className: "border-destructive ring-2 ring-destructive/30"
+        className: "border-destructive ring-2 ring-destructive/30",
       },
     ],
   }
@@ -118,6 +123,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const disabled = isDisabled || props.disabled;
+    const [showPassword, setShowPassword] = React.useState<boolean>(false);
+
+    const togglePasswordVisibility = React.useCallback(
+      () => setShowPassword(!showPassword),
+      [showPassword, setShowPassword]
+    );
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (autoCapitalization) {
@@ -135,24 +146,67 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className: containerClassName,
         })}
       >
-        {leftIcon && (
-          <span className="absolute left-0 ml-3 text-sm">{leftIcon}</span>
-        )}
-        <input
-          {...props}
-          ref={ref}
-          readOnly={isReadOnly}
-          disabled={disabled}
-          onInput={handleInput}
-          className={cn(
-            leftIcon ? "pl-10" : "pl-2.5",
-            rightIcon ? "pr-10" : "pr-2.5",
-            inputVariants({ className, isError, size, isRounded, variant }),
+        <div className="relative">
+          {leftIcon && (
+            <span className="absolute left-0 ml-3 text-sm">{leftIcon}</span>
           )}
-        />
-        {rightIcon && (
-          <span className="absolute right-0 mr-3">{rightIcon}</span>
-        )}
+          <input
+            {...props}
+            ref={ref}
+            readOnly={isReadOnly}
+            type={showPassword ? "text" : props.type}
+            disabled={disabled}
+            onInput={handleInput}
+            className={cn(
+              leftIcon ? "pl-10" : "pl-2.5",
+              rightIcon ? "pr-10" : "pr-2.5",
+              inputVariants({ className, isError, size, isRounded, variant })
+            )}
+          />
+
+          <div className="group">
+            {isError && (
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex flex-none items-center p-2.5">
+                <AlertTriangle
+                  className={cn(
+                    "size-5 text-destructive",
+                    props.type === "password" &&
+                      "transition-opacity group-hover:opacity-0"
+                  )}
+                />
+              </div>
+            )}
+
+            {props.type === "password" && !rightIcon && (
+              <button
+                className={cn(
+                  "absolute inset-y-0 right-0 flex items-center px-3",
+                  isError &&
+                    "opacity-0 transition-opacity group-hover:opacity-100"
+                )}
+                type="button"
+                onClick={() => togglePasswordVisibility()}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <Eye
+                    className="size-4 flex-none text-muted-foreground"
+                    aria-hidden
+                  />
+                ) : (
+                  <EyeClosed
+                    className="size-4 flex-none text-muted-foreground"
+                    aria-hidden
+                  />
+                )}
+              </button>
+            )}
+          </div>
+
+          {rightIcon && (
+            <span className="absolute right-0 mr-3">{rightIcon}</span>
+          )}
+        </div>
       </div>
     );
   }

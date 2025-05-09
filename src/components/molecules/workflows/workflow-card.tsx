@@ -50,7 +50,7 @@ export default function WorkflowCard({
       <MagicCard
         className="p-0"
         gradientColor={theme === "dark" ? "var(--muted)" : "var(--muted)"}
-        gradientOpacity={0.3}
+        gradientOpacity={0.1}
         gradientSize={350}
         gradientFrom={theme === "dark" ? "var(--primary)" : "var(--chart-3)"}
         gradientTo={theme === "dark" ? "var(--accent)" : "var(--accent)"}

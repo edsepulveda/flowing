@@ -1,13 +1,7 @@
-import { BrowserEntryTask } from '@/lib/workflow/entries'
-
+import { BrowserEntryTask } from "@/lib/workflow/entries";
+import { ParseHTMLEntry } from "./entries/parse-html-entry";
 
 export const WorkflowRegistry = {
   BrowserEntryTask,
-  // Add more entries here as needed
-  // Example: CustomEntryTask,
-  // Example: AnotherEntryTask,
-  // Example: YetAnotherEntryTask,
-  // Example: CustomNodeTask,
-  // Example: AnotherNodeTask,
-  // Example: YetAnotherNodeTask,
-}
+  ParseHTMLEntry,
+};

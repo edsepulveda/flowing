@@ -22,7 +22,7 @@ export const Route = createFileRoute("/dashboard/workflows/")({
 function RouteComponent() {
   const { WorkflowModal, setShowWorkflowModal } = useCreateEditWorkflow();
 
-  const { data: workflows, isLoading } = useGetWorkflows();
+  const { data: workflows, isLoading } = useGetWorkflows({});
   return (
     <>
       <WorkflowModal />

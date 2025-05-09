@@ -1,14 +1,24 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { WorkflowItemData, WorkflowsResponse } from "./types";
+import type {
+  PaginatedWorkflows,
+  WorkflowItemData,
+  WorkflowListParams,
+  WorkflowsResponse,
+} from "./types";
 import { apiClient } from "../config/request";
 
-const getWorkflows = async () => {
-  const { data } = await apiClient.get("workflows", {
+const getUserWorkflows = async (params: WorkflowListParams) => {
+  const { page = 1, size = 10, filter = {} } = params;
+
+  const queryParams = {
+    page,
+    size,
+    ...filter,
+  };
+
+  const { data } = await apiClient.get<PaginatedWorkflows>("workflows", {
     params: {
-      page: 1,
-      size: 10,
-      limit: 10,
-      offset: 0,
+      queryParams,
     },
   });
   return data;
@@ -24,20 +34,20 @@ export const getUserWorkflowData = (id: string) => {
   return queryOptions({
     queryKey: ["user_workflow", id],
     queryFn: () => getWorkflowById(id),
-    staleTime: Infinity
+    staleTime: Infinity,
   });
 };
 
-export const getWorkflowData = () => {
+export const getWorkflowData = (params: WorkflowListParams) => {
   return queryOptions<WorkflowsResponse>({
     queryKey: ["workflows"],
-    queryFn: getWorkflows,
+    queryFn: () => getUserWorkflows(params),
   });
 };
 
-export function useGetWorkflows() {
+export function useGetWorkflows(params: WorkflowListParams) {
   return useQuery<WorkflowsResponse>({
     queryKey: ["workflows"],
-    queryFn: getWorkflows,
+    queryFn: () => getUserWorkflows(params),
   });
 }
